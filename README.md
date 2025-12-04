@@ -121,6 +121,8 @@ För att garantera en smidig och pålitlig RDP-anslutning krävs ett lokalt kont
 
 Genom att övergå till ett lokalt administratörskonto elimineras de vanliga autentiseringsproblemen vid RDP och det säkerställs att ett enda, fullt behörigt konto används för både lokal användning och fjärrstyrning.
 
+![Inställning för fjärrstyrning](bilder/Fjärrskrivord.png)
+
 ---
 
 ## 🚀 Steg 5: Aktivering av Wake-on-LAN (WoL) och SSH
@@ -135,6 +137,8 @@ WoL kräver inställningar i både datorns firmware och operativsystem:
     * Under fliken **Avancerat** (Advanced), säkerställ att inställningarna för *Wake-on-LAN* och *Vakna vid magiskt paket* (Magic Packet) är aktiverade.
     * Under fliken **Energisparfunktioner** (Power Management), tillåt att enheten får starta datorn med ett magiskt paket.
 
+![Egenskaper på nätverkskort](bilder/WOL-nätverkskort.png)
+![Egenskaper på nätverkskort](bilder/Egenskaper-för-nätverkskort.png)
 ### 💡 Implementering av WoL och SSH på Raspberry Pi
 Raspberry Pi:n agerar som WoL-klient och SSH-server.
 
@@ -166,3 +170,4 @@ Använd en kommandotolk (t.ex. CMD) på din bärbara dator och logga in med Rasp
 ```bash
 ssh jacob@10.9.109.1
 ```
+![Använde SSH för att ansluta till PI:n och sedan wakeonlan för att starta min stationära dator på distans](bilder/SSH och Wake on LAN.png)
