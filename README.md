@@ -98,6 +98,8 @@ Ställ in Port Forwarding i routern. Trafik som kommer in på den externa VPN-po
 * **Extern/Intern Port:** 51820
 * **Destination:** Den permanenta IP-adressen för Raspberry Pi:n.
 
+  ![Portforward](Bilder/Portforward.png)
+
 Denna åtgärd möjliggör att VPN-klienter utanför hemnätverket kan ansluta till WireGuard-servern.
 
 ---
