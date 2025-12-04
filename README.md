@@ -170,4 +170,4 @@ Använd en kommandotolk (t.ex. CMD) på din bärbara dator och logga in med Rasp
 ```bash
 ssh jacob@10.9.109.1
 ```
-![Använde SSH för att ansluta till PI:n och sedan wakeonlan för att starta min stationära dator på distans](bilder/SSH och Wake on LAN.png)
+![Använde SSH för att ansluta till PI:n och sedan wakeonlan för att starta min stationära dator på distans](bilder/SSH-och-WakeonLAN.png)
