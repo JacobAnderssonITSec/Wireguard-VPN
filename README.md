@@ -143,7 +143,7 @@ sudo apt install wakeonlan -y
 ```
 
 **2. Väck Datorn:**
-Hämta den stationära datorns MAC-adress (t.ex. `58:11:22:C6:E5:B3`). Datorn kan nu startas med kommandot:
+Hämta den stationära datorns MAC-adress (t.ex. `11:22:33:44:55:66`). Datorn kan nu startas med kommandot:
 ```bash
 wakeonlan <MAC-adress>
 ```
