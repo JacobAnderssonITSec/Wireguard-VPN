@@ -129,7 +129,7 @@ Genom att övergå till ett lokalt administratörskonto elimineras de vanliga au
 
 För att fullborda fjärråtkomstlösningen måste den stationära datorn kunna väckas på distans, och Raspberry Pi:n måste vara åtkomlig via SSH.
 
-### 🔌 Konfigurering av WoL på Stationär Dator
+### Konfigurering av WoL på Stationär Dator
 WoL kräver inställningar i både datorns firmware och operativsystem:
 
 * **BIOS/UEFI:** Gå in i datorns BIOS/UEFI och aktivera funktionen *Power on by PCI-E* (eller motsvarande nätverksrelaterad ströminställning).
@@ -185,7 +185,7 @@ När alla komponenter är konfigurerade kan den fullständiga anslutningskedjan 
     ```
 3.  **Vänta lite:** Vänta i cirka 30 till 60 sekunder. Tiden varierar beroende på den stationära datorns uppstartstid och nätverksinitiering.
 4.  **Anslut med RDP:** Öppna programmet **Anslutning till fjärrskrivbord** **RDP** på den bärbara datorn. Ange den stationära datorns lokala IP-adress och logga in med det lokala administratörskontot.
-
+![Remote Desktop Connection](Bilder/RDP.png)
 ### Resultat
 
 Den här lösningen gör att man inte längre behöver begränsas av den bärbara datorns hårdvara när kraften inte räcker till. Oavsett var man befinner sig går det att utnyttja den stationära datorns fulla kraft för krävande uppgifter – som att köra tunga nätverkssimuleringar eller flera virtuella maskiner samtidigt.
