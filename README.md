@@ -1,23 +1,24 @@
 # Säker Fjärråtkomst till Ditt Hemmanätverk med WireGuard
 
-Denna guide beskriver hur man sätter upp en privat VPN-server för att etablera säker fjärråtkomst till det lokala nätverket. Valet av protokoll har fallit på **WireGuard**, vilket är ett modernt och strömlinjeformat VPN-protokoll som erbjuder markant snabbare uppkoppling och högre genomströmning jämfört med äldre lösningar.
+Denna guide beskriver jag hur man kan sätta upp en privat VPN-server för att få en säker fjärråtkomst till ett lokalt nätverk i hemmet. Jag valde att använda WireGuard, vilket är ett modernt och simpelt VPN-protokoll som erbjuder snabbare uppkoppling och högre genomströmning jämfört med andra och äldre VPN lösningar.
 
-WireGuard använder nyckelpar för autentisering. Även om detta ger en enklare implementering, kan ytterligare säkerhetsåtgärder implementeras efter att den grundläggande VPN-funktionaliteten är driftsatt.
+WireGuard använder nyckelpar för autentisering. Även om detta ger en enklare implementering, kan ytterligare säkerhetsåtgärder läggas till efter att den grundläggande VPN-funktionaliteten är driftsatt, som tillexempel MFA vid anslutning till VPN.
+
 
 ---
 
 ## Projektets Mål: Högpresterande Fjärrverkstad
 
-Huvudsyftet med installationen är att möjliggöra fjärråtkomst till en kraftfull stationär hemdator från en extern plats. Detta är idealiskt för användare vars bärbara datorers prestanda är otillräcklig för krävande uppgifter, såsom körning av flera virtuella maskiner i nätverksbyggande eller utvecklingsmiljöer.
+Det här projektet går ut på att jag ska kunna sitta var som helst med min bärbara dator och ändå komma åt min starka stationära dator hemma. Det passar perfekt om man har en laptop som inte orkar med så mycket, men behöver köra till exempel många virtuella maskiner.
 
-Genom att installera WireGuard-servern på en **Raspberry Pi** kan den stationära datorns fulla kapacitet utnyttjas på distans.
+Genom att installera en WireGuard-server på en Raspberry Pi kan jag använda min stationära dator fast jag inte är hemma.
 
-### Fjärranslutningskedjan
-Efter etablerad VPN-anslutning följs en effektiv fjärråtkomstkedja:
+### Hur jag kopplar upp mig
 
-1.  **SSH-åtkomst** till Raspberry Pi:n (VPN-gatewayen).
-2.  **Wake-on-LAN (WoL)** används från Pi:n för att starta den stationära datorn.
-3.  **Remote Desktop Protocol (RDP)** används för att fjärrstyra och arbeta på datorn.
+1. Ansluter till VPN på laptop
+2. SSH-åtkomst till min Raspberry Pi.
+3. Wake-on-LAN används från Pi:n för att väcka den stationära datorn.
+4. RDP används för att styra och jobba på datorn som om jag satt framför den.
 
 Denna guide ger en stegvis metod för att implementera denna säkra och högpresterande fjärråtkomstlösning.
 
@@ -25,23 +26,23 @@ Denna guide ger en stegvis metod för att implementera denna säkra och högpres
 
 ## Steg 1: Förberedelse av Raspberry Pi-servern
 
-VPN-servern kommer att etableras på en Raspberry Pi 5. Denna plattform är idealisk för att agera som en dedikerad och resurssnål VPN-gateway.
+Själva VPN-servern ska köras på en Raspberry Pi 5. Den är jättebra för det här för att den är liten, drar nästan ingen ström och orkar ändå med att sköta all trafik.
 
-* **Hårdvara:** En Raspberry Pi 5 används som värd för WireGuard.
-* **Minneskort:** För optimal prestanda rekommenderas ett minneskort med **A2-klassning**.
+* **Hårdvara:** En Raspberry Pi 5
+* **Minneskort:** För att det ska gå undan rekommenderar jag ett minneskort med A2-klassning.
 
 ### Installation av Operativsystemet
 För att förbereda systemet måste operativsystemet (OS) skrivas till minneskortet.
 
 1.  **Installera Imager:** Ladda ner och installera [Raspberry Pi Imager](https://www.raspberrypi.com/software/) på din arbetsdator.
-2.  **Skriv OS:** Använd Imager för att välja **Raspberry Pi OS 64-bit** och skriv det till minneskortet.
-3.  **Initial Uppstart:** När processen är klar, sätt in minneskortet i din Raspberry Pi 5 och utför den första uppstarten med en ansluten skärm, tangentbord och mus.
+2.  **Skriv OS:** Använd det programmet och välj **Raspberry Pi OS 64-bit** och skriv det till minneskortet.
+3.  **Starta upp:** När det är klart stoppar du in kortet i din Raspberry Pi och startar den med skärm och tangentbord för att göra de första inställningarna.
 
 ---
 
 ## Steg 2: Installation och Konfiguration av PiVPN (WireGuard)
 
-Efter den initiala uppstarten av Raspberry Pi är nästa steg att installera och konfigurera PiVPN. Detta skript underlättar installationen av WireGuard-servern.
+Efter den uppstarten av Raspberry Pi är nästa steg att installera och konfigurera PiVPN.
 
 ### Serverinstallation
 Anslut till Raspberry Pi:n antingen via SSH från en annan nätverksansluten dator eller direkt genom att använda ansluten skärm, tangentbord och mus. Utför därefter följande kommandon i terminalen:
@@ -58,7 +59,7 @@ curl -L [https://install.pivpn.io](https://install.pivpn.io) | bash
 ```
 
 ### Genomför PiVPN-guiden
-Följ instruktionerna i det interaktiva PiVPN-installationsverktyget:
+Följ stegen som dyker upp på skärmen:
 
 * **Statisk IP-adress:** Vid uppmaning, ange samma IP-adress som Raspberry Pi:n har tilldelats via DHCP för att förhindra adresskonflikter.
 * **Välj VPN-protokoll:** Välj **WireGuard**.
@@ -79,7 +80,20 @@ Den genererade `.conf`-filen ligger nu i mappen `/configs`. Kontrollera filen me
 ```bash
 ls /home/"user"/configs
 ```
+## Flytta över nyckeln till din enhet (Viktigt!)
 
+När du har skapat din konfigurationsfil i mappen /configs måste den flyttas från din Raspberry Pi till den enhet som ska använda VPN (Virtual Private Network):et (till exempel din laptop).
+
+Jag valde att flytta min fil med hjälp av ett USB (Universal Serial Bus)-minne. Det är ett säkert sätt eftersom filen då aldrig skickas över nätverket där någon annan skulle kunna få tag i den.
+
+**Tänk på säkerheten:**
+
+* **Dela aldrig filen:** Den här filen innehåller din "privata nyckel". Det är den som bevisar att det är du som vill logga in. Om någon annan får tag på den kan de använda ditt VPN (Virtual Private Network) och komma in i ditt hemmanätverk.
+* **Lås filen:** För att vara säker på att ingen annan användare på din Raspberry Pi kan rota i dina nycklar bör du förvara dem i en mapp med rätt behörigheter. Jag använder kommandot `chmod 600` på filen. Det gör att det bara är du (ägaren) som får läsa eller ändra i den.
+
+```bash
+chmod 600 /home/"user"/configs/laptop.conf
+```
 ---
 
 ## Steg 3: Nätverkskonfiguration (Router)
@@ -106,7 +120,7 @@ Denna åtgärd möjliggör att VPN-klienter utanför hemnätverket kan ansluta t
 
 ## Steg 4: Konfigurering av Fjärrskrivbord (RDP)
 
-När VPN-tunneln är etablerad är nästa steg att säkerställa att den stationära datorn kan fjärrstyras via WireGuard-anslutningen. Detta kräver aktivering av RDP (Remote Desktop Protocol) och hantering av potentiella autentiseringsproblem.
+När VPN-tunneln är uppsatt är nästa steg att säkerställa att den stationära datorn kan fjärrstyras via WireGuard-anslutningen. Detta kräver aktivering av RDP (Remote Desktop Protocol) och hantering av potentiella autentiseringsproblem.
 
 ### Utmaning: Microsoft-konton
 Vid användning av Windows Fjärrskrivbord (RDP) uppstår ofta autentiseringsproblem vid inloggning med Microsoft-konton (e-postadresser som användarnamn). Detta kan leda till återkommande inloggnings- och behörighetsfel.
