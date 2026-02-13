@@ -185,7 +185,9 @@ När alla komponenter är konfigurerade kan den fullständiga anslutningskedjan 
     ```
 3.  **Vänta lite:** Vänta i cirka 30 till 60 sekunder. Tiden varierar beroende på den stationära datorns uppstartstid och nätverksinitiering.
 4.  **Anslut med RDP:** Öppna programmet **Anslutning till fjärrskrivbord** **RDP** på den bärbara datorn. Ange den stationära datorns lokala IP-adress och logga in med det lokala administratörskontot.
-![Remote Desktop Connection](Bilder/RDP.png)
+
+![Remote Desktop Connection](bilder/RDP.png)
+
 ### Resultat
 
 Den här lösningen gör att man inte längre behöver begränsas av den bärbara datorns hårdvara när kraften inte räcker till. Oavsett var man befinner sig går det att utnyttja den stationära datorns fulla kraft för krävande uppgifter – som att köra tunga nätverkssimuleringar eller flera virtuella maskiner samtidigt.
