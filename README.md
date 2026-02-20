@@ -84,7 +84,7 @@ ls /home/"user"/configs
 
 När du har skapat din konfigurationsfil i mappen /configs måste den flyttas från din Raspberry Pi till den enhet som ska använda VPN (Virtual Private Network):et (till exempel din laptop).
 
-Jag valde att flytta min fil med hjälp av ett USB (Universal Serial Bus)-minne. Det är ett säkert sätt eftersom filen då aldrig skickas över nätverket där någon annan skulle kunna få tag i den.
+Jag valde att flytta min fil med hjälp av ett USB -minne. Det är ett säkert sätt eftersom filen då aldrig skickas över nätverket där någon annan skulle kunna få tag i den.
 
 **Tänk på säkerheten:**
 
